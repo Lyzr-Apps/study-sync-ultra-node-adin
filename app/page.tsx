@@ -1232,10 +1232,10 @@ export default function Page() {
   const [scheduleError, setScheduleError] = useState<string | null>(null)
   const [scheduleActionMsg, setScheduleActionMsg] = useState<string | null>(null)
 
-  // Load schedule on mount
-  const loadSchedules = useCallback(async () => {
+  // Load schedule data with retry support
+  const loadSchedules = useCallback(async (retryCount = 0) => {
     setScheduleLoading(true)
-    setScheduleError(null)
+    if (retryCount === 0) setScheduleError(null)
     try {
       const result = await listSchedules()
       if (result.success) {
@@ -1243,22 +1243,43 @@ export default function Page() {
         const found = allSchedules.find(s => s?.agent_id === AGENT_IDS.PROGRESS_REMINDER_AGENT) ?? null
         setScheduleData(found)
         if (found?.id) {
-          const logsResult = await getScheduleLogs(found.id, { limit: 10 })
-          if (logsResult.success && Array.isArray(logsResult.executions)) {
-            setScheduleLogs(logsResult.executions)
+          try {
+            const logsResult = await getScheduleLogs(found.id, { limit: 10 })
+            if (logsResult.success && Array.isArray(logsResult.executions)) {
+              setScheduleLogs(logsResult.executions)
+            }
+          } catch {
+            // Logs fetch failed silently - non-critical
           }
         }
+        setScheduleError(null)
       } else {
+        // On initial load failures, retry up to 2 times with delay
+        if (retryCount < 2) {
+          setScheduleLoading(false)
+          await new Promise(r => setTimeout(r, 1500))
+          return loadSchedules(retryCount + 1)
+        }
         setScheduleError(result.error ?? 'Failed to load schedules')
       }
     } catch (err) {
-      setScheduleError('Failed to load schedule data')
+      // Network errors on initial load - retry silently
+      if (retryCount < 2) {
+        setScheduleLoading(false)
+        await new Promise(r => setTimeout(r, 1500))
+        return loadSchedules(retryCount + 1)
+      }
+      setScheduleError('Failed to load schedule data. Please try refreshing.')
     }
     setScheduleLoading(false)
   }, [])
 
+  // Delay initial schedule load to allow iframe/network to stabilize
   useEffect(() => {
-    loadSchedules()
+    const timer = setTimeout(() => {
+      loadSchedules()
+    }, 800)
+    return () => clearTimeout(timer)
   }, [loadSchedules])
 
   // Sync & Summarize
