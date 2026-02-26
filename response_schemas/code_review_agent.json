@@ -1,0 +1,77 @@
+{
+  "agent_name": "Code Review Agent",
+  "agent_id": "699fec3760c6ee660b2b0cd0",
+  "agent_type": "json",
+  "accessor": "json",
+  "has_module_outputs": false,
+  "response_schema": {
+    "type": "json_schema",
+    "json_schema": {
+      "name": "CodeReviewResponse",
+      "strict": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "pr_number": {"type": "number"},
+          "repository": {"type": "string"},
+          "overall_score": {"type": "number"},
+          "recommendation": {"type": "string"},
+          "summary": {"type": "string"},
+          "quality_metrics": {
+            "type": "object",
+            "properties": {
+              "readability": {"type": "number"},
+              "maintainability": {"type": "number"},
+              "performance": {"type": "number"},
+              "security": {"type": "number"}
+            },
+            "required": ["readability", "maintainability", "performance", "security"],
+            "additionalProperties": false
+          },
+          "bugs_found": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "severity": {"type": "string"},
+                "description": {"type": "string"},
+                "file": {"type": "string"},
+                "suggestion": {"type": "string"}
+              },
+              "required": ["severity", "description", "file", "suggestion"],
+              "additionalProperties": false
+            }
+          },
+          "improvements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "category": {"type": "string"},
+                "description": {"type": "string"},
+                "priority": {"type": "string"}
+              },
+              "required": ["category", "description", "priority"],
+              "additionalProperties": false
+            }
+          },
+          "best_practices": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "practice": {"type": "string"},
+                "status": {"type": "string"},
+                "note": {"type": "string"}
+              },
+              "required": ["practice", "status", "note"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["pr_number", "repository", "overall_score", "recommendation", "summary", "quality_metrics", "bugs_found", "improvements", "best_practices"],
+        "additionalProperties": false
+      }
+    }
+  }
+}

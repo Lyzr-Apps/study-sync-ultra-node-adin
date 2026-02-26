@@ -1,0 +1,23 @@
+{
+  "nodes": [
+    {"id": "input_node", "type": "Input", "label": "Student Query", "nodeCategory": "input"},
+    {"id": "manager_agent", "type": "Agent", "label": "Project Sync Manager", "nodeCategory": "agent"},
+    {"id": "github_agent", "type": "Agent", "label": "GitHub Data Agent", "nodeCategory": "agent"},
+    {"id": "notion_agent", "type": "Agent", "label": "Notion Sync Agent", "nodeCategory": "agent"},
+    {"id": "code_review_agent", "type": "Agent", "label": "Code Review Agent", "nodeCategory": "agent"},
+    {"id": "progress_agent", "type": "Agent", "label": "Progress Reminder Agent", "nodeCategory": "agent"},
+    {"id": "scheduler_node", "type": "Agent", "label": "Scheduled: Daily at 9:00 AM EST", "nodeCategory": "agent"},
+    {"id": "output_node", "type": "Output", "label": "Response", "nodeCategory": "end"}
+  ],
+  "edges": [
+    {"source": "input_node", "target": "manager_agent"},
+    {"source": "manager_agent", "target": "github_agent"},
+    {"source": "manager_agent", "target": "notion_agent"},
+    {"source": "input_node", "target": "code_review_agent"},
+    {"source": "input_node", "target": "progress_agent"},
+    {"source": "scheduler_node", "target": "progress_agent"},
+    {"source": "manager_agent", "target": "output_node"},
+    {"source": "code_review_agent", "target": "output_node"},
+    {"source": "progress_agent", "target": "output_node"}
+  ]
+}

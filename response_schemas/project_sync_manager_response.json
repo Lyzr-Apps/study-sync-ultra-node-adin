@@ -1,0 +1,112 @@
+{
+  "agent_name": "Project Sync Manager",
+  "agent_id": "699fec5197fc9c57f6999957",
+  "description": "Coordinates GitHub data fetching and Notion syncing, aggregates results into organized task lists and project summaries",
+  "agent_type": "json",
+  "accessor": "result",
+  "auto_generated": true,
+  "response_schema": {
+    "project_summary": {
+      "project_name": "string",
+      "last_synced": "string",
+      "health_status": "string",
+      "completion_percentage": "number",
+      "total_tasks": "number",
+      "highlights": "string",
+      "blockers": "string"
+    },
+    "task_list": {
+      "todo": [
+        {
+          "title": "string",
+          "type": "string",
+          "priority": "string",
+          "assignee": "string",
+          "source": "string"
+        }
+      ],
+      "in_progress": [
+        {
+          "title": "string",
+          "type": "string",
+          "priority": "string",
+          "assignee": "string",
+          "source": "string"
+        }
+      ],
+      "done": [
+        {
+          "title": "string",
+          "type": "string",
+          "priority": "string",
+          "assignee": "string",
+          "source": "string"
+        }
+      ]
+    },
+    "sync_report": {
+      "github_status": "string",
+      "notion_status": "string",
+      "items_synced": "number",
+      "sync_timestamp": "string"
+    },
+    "active_contributors": [
+      {
+        "name": "string",
+        "contributions": "number"
+      }
+    ]
+  },
+  "example_response": {
+    "project_summary": {
+      "project_name": "sample string",
+      "last_synced": "sample string",
+      "health_status": "sample string",
+      "completion_percentage": 0,
+      "total_tasks": 0,
+      "highlights": "sample string",
+      "blockers": "sample string"
+    },
+    "task_list": {
+      "todo": [
+        {
+          "title": "sample string",
+          "type": "sample string",
+          "priority": "sample string",
+          "assignee": "sample string",
+          "source": "sample string"
+        }
+      ],
+      "in_progress": [
+        {
+          "title": "sample string",
+          "type": "sample string",
+          "priority": "sample string",
+          "assignee": "sample string",
+          "source": "sample string"
+        }
+      ],
+      "done": [
+        {
+          "title": "sample string",
+          "type": "sample string",
+          "priority": "sample string",
+          "assignee": "sample string",
+          "source": "sample string"
+        }
+      ]
+    },
+    "sync_report": {
+      "github_status": "sample string",
+      "notion_status": "sample string",
+      "items_synced": 0,
+      "sync_timestamp": "sample string"
+    },
+    "active_contributors": [
+      {
+        "name": "sample string",
+        "contributions": 0
+      }
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "agent_name": "GitHub Data Agent",
+  "agent_id": "699fec36903888ea805f4114",
+  "agent_type": "json",
+  "accessor": "json",
+  "has_module_outputs": false,
+  "response_schema": {
+    "type": "json_schema",
+    "json_schema": {
+      "name": "GitHubDataResponse",
+      "strict": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "repository": {"type": "string"},
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "number": {"type": "number"},
+                "title": {"type": "string"},
+                "state": {"type": "string"},
+                "labels": {"type": "string"},
+                "assignee": {"type": "string"},
+                "created_at": {"type": "string"}
+              },
+              "required": ["number", "title", "state", "labels", "assignee", "created_at"],
+              "additionalProperties": false
+            }
+          },
+          "pull_requests": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "number": {"type": "number"},
+                "title": {"type": "string"},
+                "state": {"type": "string"},
+                "author": {"type": "string"},
+                "is_merged": {"type": "boolean"},
+                "created_at": {"type": "string"}
+              },
+              "required": ["number", "title", "state", "author", "is_merged", "created_at"],
+              "additionalProperties": false
+            }
+          },
+          "summary": {
+            "type": "object",
+            "properties": {
+              "total_issues": {"type": "number"},
+              "open_issues": {"type": "number"},
+              "total_prs": {"type": "number"},
+              "open_prs": {"type": "number"},
+              "merged_prs": {"type": "number"}
+            },
+            "required": ["total_issues", "open_issues", "total_prs", "open_prs", "merged_prs"],
+            "additionalProperties": false
+          }
+        },
+        "required": ["repository", "issues", "pull_requests", "summary"],
+        "additionalProperties": false
+      }
+    }
+  }
+}

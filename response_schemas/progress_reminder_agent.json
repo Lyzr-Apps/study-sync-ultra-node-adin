@@ -1,0 +1,77 @@
+{
+  "agent_name": "Progress Reminder Agent",
+  "agent_id": "699fec3860c6ee660b2b0cd2",
+  "agent_type": "json",
+  "accessor": "json",
+  "has_module_outputs": false,
+  "response_schema": {
+    "type": "json_schema",
+    "json_schema": {
+      "name": "ProgressReminderResponse",
+      "strict": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "report_date": {"type": "string"},
+          "progress_summary": {
+            "type": "object",
+            "properties": {
+              "tasks_completed": {"type": "number"},
+              "tasks_in_progress": {"type": "number"},
+              "tasks_overdue": {"type": "number"},
+              "upcoming_deadlines": {"type": "number"},
+              "completion_rate": {"type": "number"}
+            },
+            "required": ["tasks_completed", "tasks_in_progress", "tasks_overdue", "upcoming_deadlines", "completion_rate"],
+            "additionalProperties": false
+          },
+          "overdue_items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {"type": "string"},
+                "due_date": {"type": "string"},
+                "days_overdue": {"type": "number"},
+                "assignee": {"type": "string"}
+              },
+              "required": ["title", "due_date", "days_overdue", "assignee"],
+              "additionalProperties": false
+            }
+          },
+          "upcoming_tasks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {"type": "string"},
+                "due_date": {"type": "string"},
+                "days_remaining": {"type": "number"},
+                "assignee": {"type": "string"}
+              },
+              "required": ["title", "due_date", "days_remaining", "assignee"],
+              "additionalProperties": false
+            }
+          },
+          "focus_areas": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "area": {"type": "string"},
+                "reason": {"type": "string"},
+                "priority": {"type": "string"}
+              },
+              "required": ["area", "reason", "priority"],
+              "additionalProperties": false
+            }
+          },
+          "message": {"type": "string"},
+          "reminder_posted": {"type": "boolean"}
+        },
+        "required": ["report_date", "progress_summary", "overdue_items", "upcoming_tasks", "focus_areas", "message", "reminder_posted"],
+        "additionalProperties": false
+      }
+    }
+  }
+}

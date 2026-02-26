@@ -1,0 +1,41 @@
+{
+  "agent_name": "Notion Sync Agent",
+  "agent_id": "699fec3710134bfe58ea5fef",
+  "agent_type": "json",
+  "accessor": "json",
+  "has_module_outputs": false,
+  "response_schema": {
+    "type": "json_schema",
+    "json_schema": {
+      "name": "NotionSyncResponse",
+      "strict": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "sync_status": {"type": "string"},
+          "items_created": {"type": "number"},
+          "items_updated": {"type": "number"},
+          "items_unchanged": {"type": "number"},
+          "sync_timestamp": {"type": "string"},
+          "synced_items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "title": {"type": "string"},
+                "type": {"type": "string"},
+                "status": {"type": "string"},
+                "notion_page_id": {"type": "string"}
+              },
+              "required": ["title", "type", "status", "notion_page_id"],
+              "additionalProperties": false
+            }
+          },
+          "message": {"type": "string"}
+        },
+        "required": ["sync_status", "items_created", "items_updated", "items_unchanged", "sync_timestamp", "synced_items", "message"],
+        "additionalProperties": false
+      }
+    }
+  }
+}

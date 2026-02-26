@@ -1,0 +1,110 @@
+{
+  "agent_name": "Project Sync Manager",
+  "agent_id": "699fec5197fc9c57f6999957",
+  "agent_type": "json",
+  "accessor": "json",
+  "has_module_outputs": false,
+  "response_schema": {
+    "type": "json_schema",
+    "json_schema": {
+      "name": "ProjectSyncManagerResponse",
+      "strict": true,
+      "schema": {
+        "type": "object",
+        "properties": {
+          "project_summary": {
+            "type": "object",
+            "properties": {
+              "project_name": {"type": "string"},
+              "last_synced": {"type": "string"},
+              "health_status": {"type": "string"},
+              "completion_percentage": {"type": "number"},
+              "total_tasks": {"type": "number"},
+              "highlights": {"type": "string"},
+              "blockers": {"type": "string"}
+            },
+            "required": ["project_name", "last_synced", "health_status", "completion_percentage", "total_tasks", "highlights", "blockers"],
+            "additionalProperties": false
+          },
+          "task_list": {
+            "type": "object",
+            "properties": {
+              "todo": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {"type": "string"},
+                    "type": {"type": "string"},
+                    "priority": {"type": "string"},
+                    "assignee": {"type": "string"},
+                    "source": {"type": "string"}
+                  },
+                  "required": ["title", "type", "priority", "assignee", "source"],
+                  "additionalProperties": false
+                }
+              },
+              "in_progress": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {"type": "string"},
+                    "type": {"type": "string"},
+                    "priority": {"type": "string"},
+                    "assignee": {"type": "string"},
+                    "source": {"type": "string"}
+                  },
+                  "required": ["title", "type", "priority", "assignee", "source"],
+                  "additionalProperties": false
+                }
+              },
+              "done": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "title": {"type": "string"},
+                    "type": {"type": "string"},
+                    "priority": {"type": "string"},
+                    "assignee": {"type": "string"},
+                    "source": {"type": "string"}
+                  },
+                  "required": ["title", "type", "priority", "assignee", "source"],
+                  "additionalProperties": false
+                }
+              }
+            },
+            "required": ["todo", "in_progress", "done"],
+            "additionalProperties": false
+          },
+          "sync_report": {
+            "type": "object",
+            "properties": {
+              "github_status": {"type": "string"},
+              "notion_status": {"type": "string"},
+              "items_synced": {"type": "number"},
+              "sync_timestamp": {"type": "string"}
+            },
+            "required": ["github_status", "notion_status", "items_synced", "sync_timestamp"],
+            "additionalProperties": false
+          },
+          "active_contributors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {"type": "string"},
+                "contributions": {"type": "number"}
+              },
+              "required": ["name", "contributions"],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": ["project_summary", "task_list", "sync_report", "active_contributors"],
+        "additionalProperties": false
+      }
+    }
+  }
+}

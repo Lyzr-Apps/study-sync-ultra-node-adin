@@ -1,0 +1,75 @@
+{
+  "app_name": "ProjectSync",
+  "agents": {
+    "project_sync_manager": {
+      "agent_id": "699fec5197fc9c57f6999957",
+      "name": "Project Sync Manager",
+      "type": "manager",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "managed_agents": ["699fec36903888ea805f4114", "699fec3710134bfe58ea5fef"],
+      "tools": [],
+      "agent_type": "json"
+    },
+    "github_data_agent": {
+      "agent_id": "699fec36903888ea805f4114",
+      "name": "GitHub Data Agent",
+      "type": "sub_agent",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "tools": ["GITHUB_CREATE_AN_ISSUE", "GITHUB_CREATE_AN_ISSUE_COMMENT", "GITHUB_CREATE_A_PULL_REQUEST", "GITHUB_CHECK_IF_A_PULL_REQUEST_HAS_BEEN_MERGED"],
+      "agent_type": "json"
+    },
+    "notion_sync_agent": {
+      "agent_id": "699fec3710134bfe58ea5fef",
+      "name": "Notion Sync Agent",
+      "type": "sub_agent",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "tools": ["NOTION_INSERT_ROW_DATABASE", "NOTION_UPDATE_ROW_DATABASE", "NOTION_QUERY_DATABASE", "NOTION_CREATE_NOTION_PAGE"],
+      "agent_type": "json"
+    },
+    "code_review_agent": {
+      "agent_id": "699fec3760c6ee660b2b0cd0",
+      "name": "Code Review Agent",
+      "type": "independent",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "tools": ["GITHUB_CREATE_AN_ISSUE_COMMENT", "GITHUB_CREATE_A_PULL_REQUEST"],
+      "agent_type": "json"
+    },
+    "progress_reminder_agent": {
+      "agent_id": "699fec3860c6ee660b2b0cd2",
+      "name": "Progress Reminder Agent",
+      "type": "independent_scheduled",
+      "model": "gpt-4.1",
+      "provider": "openai",
+      "tools": ["NOTION_QUERY_DATABASE", "NOTION_ADD_PAGE_CONTENT", "GITHUB_CREATE_AN_ISSUE_COMMENT"],
+      "agent_type": "json"
+    }
+  },
+  "schedules": {
+    "progress_reminder_schedule": {
+      "schedule_id": "699fec5825d4d77f732e3b53",
+      "agent_id": "699fec3860c6ee660b2b0cd2",
+      "agent_name": "Progress Reminder Agent",
+      "cron_expression": "0 9 * * *",
+      "timezone": "America/New_York",
+      "description": "Daily at 9:00 AM Eastern",
+      "is_active": false,
+      "message": "Run daily progress check: Query Notion database for current task statuses and GitHub repository for recent activity. Compile progress summary, identify overdue items and upcoming deadlines, and post update reminders."
+    }
+  },
+  "integrations": {
+    "github": {
+      "tool_source": "composio",
+      "tool_name": "github",
+      "persist_auth": true
+    },
+    "notion": {
+      "tool_source": "composio",
+      "tool_name": "notion",
+      "persist_auth": true
+    }
+  }
+}
